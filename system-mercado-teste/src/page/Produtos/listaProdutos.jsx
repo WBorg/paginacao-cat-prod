@@ -7,6 +7,7 @@ import css from '../Categorias/listaCategorias.module.css'
 import NavBar from '../../components/NavBar/NavBar';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import {Pagination} from '../../components/Pagination/Pagination'
 
 
 export function ListaProdutos(){
@@ -14,6 +15,8 @@ export function ListaProdutos(){
   const history = useHistory()
   const [data, setData] = useState([]);
   const [search, setSearch] = useState(''); 
+  const [page, setPage] = useState("");
+  const [lastPage, setLastPage] = useState("")
   const [status, setStatus] = useState({
     type:'',
     mensagem: ''
@@ -23,15 +26,21 @@ export function ListaProdutos(){
   ? data.filter((products)=> products.name.toLowerCase().includes(search.toLocaleLowerCase()))
   : []
 
-  const getProducts = async () =>{
+  const getProducts = async (page) =>{
+
+    if(page === undefined)  page = 1
+    setPage(page)
+
     const headers = {
       'headers': {
         'Authorization' : 'Bearer ' +  localStorage.getItem('token')
       }
     }
-    await api.get("/products/all", headers)
+    await api.get("/products/all/pages/" + page, headers)
     .then((response)=>{
         setData(response.data.products)
+        setLastPage(response.data.lastPage)
+
         console.log(response.data.products)
     }).catch((error)=>{
       if(error.response){
@@ -176,10 +185,12 @@ export function ListaProdutos(){
                 </tr>
                     )
                   )
-
+           
             )}
             </tbody>
         </Table>
+        <Pagination page={page} lastPage={lastPage} getItens={getProducts}/>
+        
       </div>
 
 

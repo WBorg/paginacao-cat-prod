@@ -42,7 +42,7 @@ exports.findAll = async(req,res)=>{
 exports.findAllPages = async(req,res)=>{
   console.log(req.params)
   const {page = 1} = req.params
-  const limit = 2
+  const limit = 5
   let lastPage = 1
 
   const countCategories = await Categories.count()

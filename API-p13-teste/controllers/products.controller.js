@@ -16,9 +16,7 @@ exports.create =  async(req, res) =>{
       mensagem: `Erro: Produto não encontrado... ${err}`
     })
   })
-}
-/********************************************************************************* */
-
+}/***************************************************************** */
 exports.findAll = async(req,res)=>{
   await Products.findAll({
     attributes: ['id','name','description','quantity','price', 'categorieId'],
@@ -30,6 +28,56 @@ exports.findAll = async(req,res)=>{
     return res.json({
       erro: false,
       products
+    });
+  }).catch((err) => {
+    return res.status(400).json({
+      erro : true,
+      mensagem: `Erro ${err} ou nenhum produto encontrado!!!`
+    })
+  })
+}
+/********************************************************************************* */
+
+exports.findAllPages = async(req,res)=>{
+  console.log(req.params)
+  const {page = 1} = req.params
+  const limit = 5
+  let lastPage = 1
+
+  const countProducts = await Products.count()
+  console.log(countProducts)
+
+  if(countProducts === null){
+    return res.status(400).json({
+      erro : true,
+      mensagem: "Error: Produtos não encontrado"
+    })
+  }
+  else{
+    lastPage = Math.ceil((countProducts / limit))
+    console.log(lastPage)
+  }
+  // 
+  ///Exemplo:
+  // pag 1 = 1,2
+  // pag 2 = 2,3
+  // pag 3 = 3,4
+
+  await Products.findAll({
+    attributes: ['id','name','description','quantity','price', 'categorieId'],
+    order: [['name', 'ASC']],
+    include: [Categories],
+    
+    offset: Number((page * limit) - limit),
+    limit : limit
+
+  })
+  .then((products) => {
+    return res.json({
+      erro: false,
+      products,
+      countProducts,
+      lastPage
     });
   }).catch((err) => {
     return res.status(400).json({

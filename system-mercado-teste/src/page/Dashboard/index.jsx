@@ -8,18 +8,23 @@ import  css from  './dashboard.module.css';
 export const Dashboard = () =>{
 
   const token = localStorage.getItem("token");
-  const { authenticated,handleLogout}  = useContext(Context)
+  
 
-  console.log(`Situação do usuário na página Login: ${authenticated}`)
   /**************************************** */
   
 /************************************************* */
 
   return(
-    <div>
+    <>
       <NavBar/>
-      <button type="button" onClick={handleLogout}>Sair</button>
-    </div>
+      <div className={css.center}>
+        
+          Painel de controle
+        
+
+      </div>
+    </>
+    
   )
 }
         

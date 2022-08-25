@@ -7,6 +7,7 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Table from 'react-bootstrap/Table';
 import css from './listaCategorias.module.css';
+import { Pagination } from './../../components/Pagination/Pagination';
 
 
 
@@ -191,37 +192,7 @@ export function ListaCategorias(){
             )}
             </tbody>
         </Table>
-        {
-          page != 1 
-          ? <Button type="button"  onClick={()=> getCategories(1)}>Primeira</Button>
-          : <Button type="button" disabled>Última</Button>
-        } {" "}
-        
-        {/* antes da p´gina que o usuário está */}
-        {
-          page != 1 
-          ? <Button type="button"  onClick={()=> getCategories(page - 1 )}>{page -1}</Button>
-          : ""
-        } {" "}
-
-
-        {/* página atual */}
-        <Button type="button" disabled>{page}</Button>{" "}
-        
-        {/* depois da página que o usuário está */}
-        {
-          page +1  <= lastPage  
-          ? <Button type="button"  onClick={()=> getCategories(page + 1 )}>{page +1}</Button>
-          : ""
-        } {" "}
-        
-        
-        {/* ultima página */}
-        {page != lastPage 
-        ? <Button type="button"  onClick={()=> getCategories(lastPage)}>Última página</Button>
-        : <Button type="button" disabled>Última</Button>
-          
-        }{" "}
+        <Pagination page={page} lastPage={lastPage} getItens={getCategories}/>           
 
       </div>
 

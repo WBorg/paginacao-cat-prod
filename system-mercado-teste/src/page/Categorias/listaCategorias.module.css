@@ -29,11 +29,11 @@
 .search{
   box-size: border-box;
   outline: none;
-  border: 1px solid orange;
+  border: 1px solid red;
   border-radius: 5px;
-  height: 24px;
-  width: 109.750px;
-  padding: 6px 12px;
+  height: 38px;
+  width: 135px;
+  padding: 8px 20px;
 }
 
 .table{
