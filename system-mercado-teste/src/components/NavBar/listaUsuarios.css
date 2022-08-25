@@ -1,0 +1,11 @@
+.linkNavBar{
+  text-decoration: unset;
+  color: unset;
+
+}
+
+.linkNavBar:hover{
+
+  color: unset;
+}
+

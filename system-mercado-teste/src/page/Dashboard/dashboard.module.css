@@ -1,0 +1,13 @@
+.center{
+  
+  margin: 0 auto;
+  border: 1px solid red;
+  width: 400px;
+  text-align: center;
+  margin-top: 40px;
+
+}
+
+.bg{
+  background-color: #333;
+}

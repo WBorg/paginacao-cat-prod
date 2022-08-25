@@ -1,0 +1,24 @@
+.buttons{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.linkNavBar{
+  text-decoration: unset;
+  color: unset;
+
+}
+.linkNavBar:hover{
+  color: unset;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 13rem;
+  margin-left: 2rem;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+}

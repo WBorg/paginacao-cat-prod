@@ -1,0 +1,55 @@
+.buttons{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.linkNavBar{
+  text-decoration: unset;
+  color: unset;
+
+}
+
+.linkNavBar:hover{
+  color: unset;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 13rem;
+  margin-left: 13rem;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  
+
+}
+
+.search{
+  box-size: border-box;
+  outline: none;
+  border: 1px solid orange;
+  border-radius: 5px;
+  height: 24px;
+  width: 109.750px;
+  padding: 6px 12px;
+}
+
+.table{
+  margin-right: 13rem;
+  margin-left: 13rem;
+}
+
+thead>tr , tbody>tr{
+  text-align: center;
+  height: 40px;
+}
+
+tbody>tr:nth-child(odd){
+  background-color: rgba(255,69,0,0.2);
+}
+
+tbody>tr>td:last-child{
+  background-color: unset;
+}
