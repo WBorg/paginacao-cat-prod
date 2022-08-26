@@ -17,6 +17,7 @@ export function ListaProdutos(){
   const [search, setSearch] = useState(''); 
   const [page, setPage] = useState("");
   const [lastPage, setLastPage] = useState("")
+  const [reg, setReg] = useState(5)
   const [status, setStatus] = useState({
     type:'',
     mensagem: ''
@@ -26,17 +27,19 @@ export function ListaProdutos(){
   ? data.filter((products)=> products.name.toLowerCase().includes(search.toLocaleLowerCase()))
   : []
 
-  const getProducts = async (page) =>{
+  const getProducts = async (page,reg) =>{
 
     if(page === undefined)  page = 1
+    if(reg === undefined) reg = 5
     setPage(page)
+    console.log(reg)
 
     const headers = {
       'headers': {
         'Authorization' : 'Bearer ' +  localStorage.getItem('token')
       }
     }
-    await api.get("/products/all/pages/" + page, headers)
+    await api.get("/products/all/pages" + `?page=${page}&reg=${reg}`, headers)
     .then((response)=>{
         setData(response.data.products)
         setLastPage(response.data.lastPage)
@@ -58,9 +61,9 @@ export function ListaProdutos(){
   }
 
   useEffect(()=>{
-    getProducts()
+    getProducts(page,reg)
     
-  },[])
+  },[reg])
 
   
   async function handleDelete (id){
@@ -93,7 +96,7 @@ export function ListaProdutos(){
       
       
     })
-    getProducts()
+    getProducts(page,reg)
 
   }
 
@@ -122,6 +125,13 @@ export function ListaProdutos(){
       <div className={css.header}>
         <h1>Lista de Produtos</h1>
         <input className={css.search} type="text" placeholder="Buscar..." onChange={ e => setSearch(e.target.value) } />
+        <select name="reg" value={reg} onChange={(e) => setReg(e.target.value)}>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+        </select>
         <Button variant="success">
             <Link className={css.linkNavBar} to="/produtos/novo">Novo Produto</Link>
         </Button>
@@ -189,7 +199,7 @@ export function ListaProdutos(){
             )}
             </tbody>
         </Table>
-        <Pagination page={page} lastPage={lastPage} getItens={getProducts}/>
+        <Pagination page={page} reg={reg} lastPage={lastPage} getItens={getProducts}/>
         
       </div>
 

@@ -40,8 +40,11 @@ exports.findAll = async(req,res)=>{
 
 exports.findAllPages = async(req,res)=>{
   console.log(req.params)
-  const {page = 1} = req.params
-  const limit = 5
+  console.log(req.query)
+
+  const {page = 1, reg = 2} = req.query
+  console.log(page,reg)
+  const limit = Number(reg)
   let lastPage = 1
 
   const countProducts = await Products.count()
