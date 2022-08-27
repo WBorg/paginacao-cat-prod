@@ -15,8 +15,8 @@ export function ListaProdutos(){
   const history = useHistory()
   const [data, setData] = useState([]);
   const [search, setSearch] = useState(''); 
-  const [page, setPage] = useState("");
-  const [lastPage, setLastPage] = useState("")
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(5)
   const [reg, setReg] = useState(5)
   const [status, setStatus] = useState({
     type:'',
@@ -110,7 +110,7 @@ export function ListaProdutos(){
           onClick: ()=> handleDelete(product.id)
         },
         {
-          label: 'No'
+          label: 'Não'
           
         }
       ],
@@ -125,7 +125,8 @@ export function ListaProdutos(){
       <div className={css.header}>
         <h1>Lista de Produtos</h1>
         <input className={css.search} type="text" placeholder="Buscar..." onChange={ e => setSearch(e.target.value) } />
-        <select name="reg" value={reg} onChange={(e) => setReg(e.target.value)}>
+        <label className={css.label} htmlFor="reg">Registros por página</label>
+        <select name="reg" value={reg} onChange={(e) =>{setReg(e.target.value);getProducts(page,reg)} }>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>

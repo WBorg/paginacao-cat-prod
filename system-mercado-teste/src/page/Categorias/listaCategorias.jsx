@@ -22,8 +22,10 @@ export function ListaCategorias(){
   const history = useHistory()
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
-  const [page, setPage] = useState("");
+  const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState("")
+  const [reg, setReg] = useState(5)
+
   const [status, setStatus] = useState({
     type:'',
     mensagem: ''
@@ -35,9 +37,11 @@ export function ListaCategorias(){
     : []
   
 
-  const getCategories = async (page) =>{
+  const getCategories = async (page,reg) =>{
 
     if(page === undefined)  page = 1
+    if(reg === undefined) reg = 5
+
     setPage(page)
 
     const headers = {
@@ -45,7 +49,7 @@ export function ListaCategorias(){
         'Authorization' : 'Bearer ' +  localStorage.getItem('token')
       }
     }
-    await api.get("/categories/all/pages/" + page, headers)
+    await api.get(`/categories/all/pages?page=${page}&reg=${reg}`, headers)
     .then((response)=>{
         setData(response.data.categories)
         setLastPage(response.data.lastPage)
@@ -65,11 +69,11 @@ export function ListaCategorias(){
   }
 
   useEffect(()=>{
-    getCategories()
+    getCategories(page,reg)
     console.log("effect")
     return () => console.log("Saiu")
     
-  },[])
+  },[reg])
 
  
 
@@ -118,7 +122,7 @@ export function ListaCategorias(){
           onClick: ()=> handleDelete(categorie.id)
         },
         {
-          label: 'No'
+          label: 'Não'
           
         }
       ],
@@ -135,6 +139,14 @@ export function ListaCategorias(){
       <div className={css.header}>
         <h1>Lista de Categorias</h1>
         <input className={css.search} type="text" placeholder="Buscar..." onChange={ e => setSearch(e.target.value) } />
+        <label className={css.label} htmlFor="reg">Registros por página</label>
+        <select name="reg" value={reg} onChange={(e) =>{setReg(e.target.value);getCategories(page,reg)} }>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+        </select>
         <Button variant="success">
             <Link className={css.linkNavBar} to="/categorias/novo">Nova Categoria</Link>
         </Button>

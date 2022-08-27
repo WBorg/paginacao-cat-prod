@@ -53,3 +53,7 @@ tbody>tr:nth-child(odd){
 tbody>tr>td:last-child{
   background-color: unset;
 }
+
+.label{
+  margin-right: -40px;
+}
