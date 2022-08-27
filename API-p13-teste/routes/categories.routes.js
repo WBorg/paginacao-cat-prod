@@ -5,7 +5,7 @@ const { validaToken } = require('../middlewares/auth');
 
 
 categoriesRoutes.get("/all",validaToken, categories.findAll);
-categoriesRoutes.get("/all/pages/:page", categories.findAllPages);
+categoriesRoutes.get("/all/pages", categories.findAllPages);
 
 categoriesRoutes.get("/show/:id",validaToken, categories.findOne);
 
